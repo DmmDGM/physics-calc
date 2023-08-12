@@ -29,10 +29,10 @@ export class Terminal extends nodeEvents.EventEmitter {
 
 		// Initializes keypress events
 		nodeReadline.emitKeypressEvents(process.stdin);
-		if(process.stdin.isTTY) process.stdin.setRawMode(true);
+		if (process.stdin.isTTY) process.stdin.setRawMode(true);
 		process.stdin.on("keypress", (string: string, key: Key) => {
 			this.emit("key", string, key);
-			if(key.ctrl && key.name === "c") process.exit();
+			if (key.ctrl && key.name === "c") process.exit();
 		});
 	}
 
@@ -42,7 +42,7 @@ export class Terminal extends nodeEvents.EventEmitter {
 	}
 
 	gap(lines: number = 1): void {
-		for(let line = 0; line < lines; line++) console.log();
+		for (let line = 0; line < lines; line++) console.log();
 	}
 
 	print(message: string, style: Style = "default"): void {
@@ -59,8 +59,8 @@ export class Terminal extends nodeEvents.EventEmitter {
 
 	prompt(query: string = "> "): Promise<string> {
 		// Returns answer
-		return new Promise(resolve => {
-			this.cli.question(chalk.blue(query), answer => resolve(answer));
+		return new Promise((resolve) => {
+			this.cli.question(chalk.blue(query), (answer) => resolve(answer));
 		});
 	}
 }

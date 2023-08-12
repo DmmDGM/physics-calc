@@ -13,7 +13,7 @@ export type Result = {
 	maximumHorizontalDisplacement: number;
 	maximumVerticalDisplacement: number;
 	peakTime: number;
-}
+};
 
 // Class
 export class ProjectileMotion extends Solver {
@@ -24,32 +24,32 @@ export class ProjectileMotion extends Solver {
 	id = ProjectileMotion.id;
 
 	// Methods
-	async solve(solvers: { [ solver: string ]: Solver }, defaultValues: Partial<Result> = {}): Promise<Result> {
+	async solve(solvers: { [solver: string]: Solver }, defaultValues: Partial<Result> = {}): Promise<Result> {
 		// Defines initial velocity
 		let initialVelocity: number | null | undefined = defaultValues["initialVelocity"];
-		if(typeof initialVelocity === "undefined") {
+		if (typeof initialVelocity === "undefined") {
 			this.printInput("Input: Initial Velocity | Default = 0 (m/s)");
 			initialVelocity = await this.promptNumber(0);
-			if(initialVelocity === null) throw new Error("Invalid initial velocity");
+			if (initialVelocity === null) throw new Error("Invalid initial velocity");
 		}
 		this.printAnswer(`Given: vel_init = ${initialVelocity} (m/s)`);
 
 		// Defines angle
 		let angle: number | null | undefined = defaultValues["angle"];
-		if(typeof angle === "undefined") {
+		if (typeof angle === "undefined") {
 			this.printInput("Input: Angle | Default = 0 (°)");
 			angle = await this.promptNumber(0);
-			if(angle === null) throw new Error("Invalid angle");
+			if (angle === null) throw new Error("Invalid angle");
 		}
 		this.printAnswer(`Given: angle = ${angle} (°)`);
 		const radians = toRadians(angle);
 
 		// Defines gravity
 		let gravity: number | null | undefined = defaultValues["gravity"];
-		if(typeof gravity === "undefined") {
+		if (typeof gravity === "undefined") {
 			this.printInput("Input: Gravity | Default = 9.8 (m/s^2)");
 			gravity = await this.promptNumber(9.8);
-			if(gravity === null) throw new Error("Invalid gravity");
+			if (gravity === null) throw new Error("Invalid gravity");
 		}
 		this.printAnswer(`Given: gravity = ${gravity} (N)`);
 

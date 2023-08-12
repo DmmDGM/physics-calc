@@ -24,7 +24,7 @@ export abstract class Solver {
 		// Prints answer
 		this.terminal.print(message);
 	}
-	
+
 	printInput(message: string): void {
 		// Prints input
 		this.terminal.print(message, "critical");
@@ -35,22 +35,21 @@ export abstract class Solver {
 		this.terminal.print(message, "log");
 	}
 
-
 	async promptBoolean(defaultAnswer: boolean | null = false): Promise<boolean | null> {
 		// Returns boolean
 		const answer = (await this.terminal.prompt()).toLowerCase();
-		if(answer === "true" || answer === "t" || answer === "yes" || answer === "y") return true;
-		else if(answer === "false" || answer === "f" || answer === "no" || answer === "n") return false;
+		if (answer === "true" || answer === "t" || answer === "yes" || answer === "y") return true;
+		else if (answer === "false" || answer === "f" || answer === "no" || answer === "n") return false;
 		else return defaultAnswer;
 	}
-	
+
 	async promptNumber(defaultAnswer: number | null = null): Promise<number | null> {
 		// Returns number
 		const answer = parseFloat(await this.terminal.prompt());
 		return Number.isNaN(answer) ? defaultAnswer : answer;
 	}
 
-	abstract solve(solvers: { [ solver: string ]: Solver }, defaultValues?: Partial<Result>): Promise<Result>;
+	abstract solve(solvers: { [solver: string]: Solver }, defaultValues?: Partial<Result>): Promise<Result>;
 }
 
 // Exports

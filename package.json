@@ -1,4 +1,8 @@
 {
+	"bin": "./out/index.js",
+	"dependencies": {
+		"chalk": "^5.3.0"
+	},
 	"devDependencies": {
 		"@types/node": "^20.3.1",
 		"@typescript-eslint/eslint-plugin": "^6.2.0",
@@ -7,8 +11,5 @@
 	},
 	"main": "out/index.js",
 	"name": "tui-solver",
-	"type": "module",
-	"dependencies": {
-		"chalk": "^5.3.0"
-	}
+	"type": "module"
 }
