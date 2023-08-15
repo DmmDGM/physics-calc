@@ -11,6 +11,6 @@
 	},
 	"main": "out/index.js",
 	"name": "tui-solver",
-	"version": "v1.0.0",
+	"version": "v1.1.0",
 	"type": "module"
 }
