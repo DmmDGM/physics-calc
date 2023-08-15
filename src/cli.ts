@@ -30,28 +30,34 @@ export const keyboard: Keyboard = new nodeEvents.EventEmitter();
 
 // Emits keypress events
 nodeReadline.emitKeypressEvents(process.stdin);
-if(process.stdin.isTTY) process.stdin.setRawMode(true);
+if (process.stdin.isTTY) process.stdin.setRawMode(true);
 
 // Creates listener
-process.stdin.on("keypress", (raw: string, key: {
-	code?: string,
-	ctrl: boolean,
-	meta: boolean,
-	name?: string,
-	sequence: string,
-	shift: boolean
-}) => {
-	// Emits event
-	keyboard.emit("key", {
-		code: key.code,
-		ctrl: key.ctrl,
-		meta: key.meta,
-		name: key.name,
-		raw: raw,
-		sequence: key.sequence,
-		shift: key.shift
-	});
-});
+process.stdin.on(
+	"keypress",
+	(
+		raw: string,
+		key: {
+			code?: string;
+			ctrl: boolean;
+			meta: boolean;
+			name?: string;
+			sequence: string;
+			shift: boolean;
+		}
+	) => {
+		// Emits event
+		keyboard.emit("key", {
+			code: key.code,
+			ctrl: key.ctrl,
+			meta: key.meta,
+			name: key.name,
+			raw: raw,
+			sequence: key.sequence,
+			shift: key.shift
+		});
+	}
+);
 
 // Creates clear function
 export function clear(): void {
@@ -69,14 +75,14 @@ export function gap(gap: number = 1): void {
 export function print(message: string, style: PrintStyle = "default"): void {
 	// Creates styles
 	const styles = {
-		"default": chalk.green,
-		"error": chalk.red,
-		"hidden": chalk.gray,
-		"highlight": chalk.bgYellowBright.black,
-		"important": chalk.blue,
-		"separator": chalk.magenta,
-		"text": chalk.white,
-		"warning": chalk.yellow
+		default: chalk.green,
+		error: chalk.red,
+		hidden: chalk.gray,
+		highlight: chalk.bgYellowBright.black,
+		important: chalk.blue,
+		separator: chalk.magenta,
+		text: chalk.white,
+		warning: chalk.yellow
 	};
 
 	// Prints message
@@ -96,9 +102,9 @@ export function showCursor(): void {
 // Creates prompt functions
 export function prompt(query: string = "> "): Promise<string> {
 	// Returns response
-	return new Promise(resolve => {
+	return new Promise((resolve) => {
 		// Prompts
-		stdio.question(chalk.blue(query), response => {
+		stdio.question(chalk.blue(query), (response) => {
 			resolve(response);
 		});
 	});

@@ -34,24 +34,26 @@ type Definition = {
 };
 
 // Creates solver
-export async function execute(values: {
-	query?: string
-} = {}): Promise<void> {
+export async function execute(
+	values: {
+		query?: string;
+	} = {}
+): Promise<void> {
 	// Defines word
-	const query = values.query ?? await cli.promptString("[Prompt] Query: ");
-	if(query === null) throw new Error("[Error] Invalid query");
+	const query = values.query ?? (await cli.promptString("[Prompt] Query: "));
+	if (query === null) throw new Error("[Error] Invalid query");
 	cli.print(`[Given] Query = ${query}`);
-	
+
 	// Searches query
 	const result = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${query}`);
-	if(result.status === 404) throw new Error("[Error] Query not found");
-	else if(result.status !== 200) throw new Error("[Error] Cannot connect to dictionapi at this moment");
+	if (result.status === 404) throw new Error("[Error] Query not found");
+	else if (result.status !== 200) throw new Error("[Error] Cannot connect to dictionapi at this moment");
 
 	// Loads definition
 	const definitions: Definition[] = await result.json();
-	
+
 	// Prints definitions
-	for(let definitionIndex = 0; definitionIndex < definitions.length; definitionIndex++) {
+	for (let definitionIndex = 0; definitionIndex < definitions.length; definitionIndex++) {
 		// Defines definition
 		const definition = definitions[definitionIndex];
 
@@ -72,7 +74,7 @@ export async function execute(values: {
 		cli.print(`Phonetics: (${phonetics})`, "hidden");
 
 		// Prints meanings
-		for(let meaningIndex = 0; meaningIndex < definition.meanings.length; meaningIndex++) {
+		for (let meaningIndex = 0; meaningIndex < definition.meanings.length; meaningIndex++) {
 			// Defines meaning
 			const meaning = definition.meanings[meaningIndex];
 
@@ -87,7 +89,7 @@ export async function execute(values: {
 
 			// Prints explanations
 			cli.print("Definition:");
-			for(let explanationIndex = 0; explanationIndex < meaning.definitions.length; explanationIndex++) {
+			for (let explanationIndex = 0; explanationIndex < meaning.definitions.length; explanationIndex++) {
 				// Defines explanantion
 				const explanantion = meaning.definitions[explanationIndex];
 
@@ -95,13 +97,13 @@ export async function execute(values: {
 				cli.print(`${explanationIndex + 1}. ${explanantion.definition}`, "text");
 
 				// Prints example
-				if("example" in explanantion && typeof explanantion.example === "string")
+				if ("example" in explanantion && typeof explanantion.example === "string")
 					cli.print(`- Example: ${explanantion.example}`, "hidden");
 			}
 
 			// Prints synonyms and antonyms
 			cli.print(`Synonyms: ${synonyms}`);
-			cli.print(`Antonyms: ${antonyms}`); 
+			cli.print(`Antonyms: ${antonyms}`);
 		}
 	}
 }

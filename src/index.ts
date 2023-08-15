@@ -11,8 +11,8 @@ cli.hideCursor();
 
 // Creates selection screen
 const selection = {
-	"Converter": converter,
-	"Dictionary": dictionary
+	Converter: converter,
+	Dictionary: dictionary
 } as const;
 const selectionList = Object.keys(selection);
 const selectionRange = 10;
@@ -23,26 +23,29 @@ let selectionLocked = false;
 // Handles keypress events
 cli.keyboard.on("key", async (key) => {
 	// Handles exit
-	if(key.ctrl && key.name === "c") {
+	if (key.ctrl && key.name === "c") {
 		// Shows cursor
 		cli.showCursor();
-		
+
 		// Exits
 		process.exit(0);
 	}
 
 	// Handles selection menu
-	else if(!selectionLocked) {
-		if(key.name === "up") previousSelectionIndex();
-		else if(key.name === "down") nextSelectionIndex();
-		else if(key.name === "left") previousSelectionPage();
-		else if(key.name === "right") nextSelectionPage();
-		else if(key.name === "return") {
+	else if (!selectionLocked) {
+		if (key.name === "up") previousSelectionIndex();
+		else if (key.name === "down") nextSelectionIndex();
+		else if (key.name === "left") previousSelectionPage();
+		else if (key.name === "right") nextSelectionPage();
+		else if (key.name === "return") {
 			// Locks selection
 			selectionLocked = true;
 
 			// Selects solver
-			const selectionWindow = selectionList.slice(selectionPage * selectionRange, (selectionPage + 1) * selectionRange);
+			const selectionWindow = selectionList.slice(
+				selectionPage * selectionRange,
+				(selectionPage + 1) * selectionRange
+			);
 			const selectionSelected = selectionWindow[selectionIndex] as keyof typeof selection;
 
 			// Sets up solver
@@ -52,10 +55,9 @@ cli.keyboard.on("key", async (key) => {
 			// Executes solver
 			try {
 				await selection[selectionSelected]();
-			}
-			catch(error) {
+			} catch (error) {
 				cli.print(error instanceof Error ? error.message : "[Error] Unknown error", "error");
-				if(debug) console.log(error);
+				if (debug) console.log(error);
 			}
 
 			// Cleans up solver
@@ -70,8 +72,7 @@ cli.keyboard.on("key", async (key) => {
 
 			// Refreshes selection display
 			displaySelection();
-		}
-		else displaySelection();
+		} else displaySelection();
 	}
 });
 
@@ -81,10 +82,9 @@ displaySelection();
 // Creates selection helpers
 function previousSelectionIndex() {
 	// Decrements index if possible
-	if(selectionIndex > 0) selectionIndex -= 1;
-
+	if (selectionIndex > 0) selectionIndex -= 1;
 	// Decrements page if possible
-	else if(selectionPage > 0) {
+	else if (selectionPage > 0) {
 		selectionPage -= 1;
 		selectionIndex = selectionRange - 1;
 	}
@@ -94,12 +94,11 @@ function previousSelectionIndex() {
 }
 function nextSelectionIndex() {
 	// Increments index if possible
-	if(selectionPage * selectionRange + selectionIndex < selectionList.length - 1) {
-		if(selectionIndex === selectionRange - 1) {
+	if (selectionPage * selectionRange + selectionIndex < selectionList.length - 1) {
+		if (selectionIndex === selectionRange - 1) {
 			selectionPage += 1;
 			selectionIndex = 0;
-		}
-		else selectionIndex += 1;
+		} else selectionIndex += 1;
 	}
 
 	// Refreshes selection menu
@@ -107,7 +106,7 @@ function nextSelectionIndex() {
 }
 function previousSelectionPage() {
 	// Decrements page if possible
-	if(selectionPage > 0) {
+	if (selectionPage > 0) {
 		selectionPage -= 1;
 		selectionIndex = 0;
 	}
@@ -117,7 +116,7 @@ function previousSelectionPage() {
 }
 function nextSelectionPage() {
 	// Increments page if possible
-	if((selectionPage + 1) * selectionRange < selectionList.length - 1) {
+	if ((selectionPage + 1) * selectionRange < selectionList.length - 1) {
 		selectionPage += 1;
 		selectionIndex = 0;
 	}
@@ -137,10 +136,13 @@ function displaySelection() {
 	// Prints selection window
 	cli.print("--- [Choose Solver] ---", "separator");
 	const selectionWindow = selectionList.slice(selectionPage * selectionRange, (selectionPage + 1) * selectionRange);
-	for(let index = 0; index < selectionWindow.length; index++) {
+	for (let index = 0; index < selectionWindow.length; index++) {
 		cli.print(selectionWindow[index], index === selectionIndex ? "highlight" : "hidden");
 	}
-	cli.print("--- Up: Previous Solver | Down: Next Solver | Left: Previous Page | Right: Next Page | Enter: Select ---", "separator");
+	cli.print(
+		"--- Up: Previous Solver | Down: Next Solver | Left: Previous Page | Right: Next Page | Enter: Select ---",
+		"separator"
+	);
 	cli.gap();
 
 	// Prints footer

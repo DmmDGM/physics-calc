@@ -4,96 +4,96 @@ import * as cli from "../cli.js";
 
 // Defines types
 export type RawUnit = keyof typeof units;
-export type ParsedUnit = typeof units[RawUnit];
+export type ParsedUnit = (typeof units)[RawUnit];
 
 // Creates unit table
 export const units = {
 	// Millisecond
-	"millisecond": "millisecond",
-	"milliseconds": "millisecond",
-	"msec": "millisecond",
-	
+	millisecond: "millisecond",
+	milliseconds: "millisecond",
+	msec: "millisecond",
+
 	// Second
-	"second": "second",
-	"seconds": "second",
-	"sec": "second",
+	second: "second",
+	seconds: "second",
+	sec: "second",
 
 	// Minute
-	"minute": "minute",
-	"minutes": "minute",
-	"min": "minute",
+	minute: "minute",
+	minutes: "minute",
+	min: "minute",
 
 	// Hour
-	"hour": "hour",
-	"hours": "hour",
-	"hr": "hour",
+	hour: "hour",
+	hours: "hour",
+	hr: "hour",
 
 	// Day
-	"day": "day",
-	"days": "day",
-	"dy": "day",
+	day: "day",
+	days: "day",
+	dy: "day",
 
 	// Week
-	"week": "week",
-	"weeks": "week",
-	"wk": "week",
+	week: "week",
+	weeks: "week",
+	wk: "week",
 
 	// Month
-	"month": "month",
-	"months": "month",
-	"mon": "month",
-	
+	month: "month",
+	months: "month",
+	mon: "month",
+
 	// Year
-	"year": "year",
-	"years": "year",
-	"yr": "year"
+	year: "year",
+	years: "year",
+	yr: "year"
 } as const;
 
 // Creates converters
 export const converter = {
 	from: {
-		"millisecond": (initial: number) => {
+		millisecond: (initial: number) => {
 			const standard = initial / 1000;
 			cli.print("[Formula] Second = Millisecond / 1000", "hidden");
 			cli.print(`[Evaluate] Second = ${standard}`, "hidden");
 			return standard;
 		},
-		"second": (initial: number) => {
+		second: (initial: number) => {
 			const standard = initial;
 			return standard;
 		},
-		"minute": (initial: number) => {
+		minute: (initial: number) => {
 			const standard = initial * 60;
 			cli.print("[Formula] Second = Minute * 60", "hidden");
 			cli.print(`[Evaluate] Second = ${standard}`, "hidden");
 			return standard;
 		},
-		"hour": (initial: number) => {
+		hour: (initial: number) => {
 			const standard = initial * 3_600;
 			cli.print("[Formula] Second = Hour * 3600", "hidden");
 			cli.print(`[Evaluate] Second = ${standard}`, "hidden");
 			return standard;
 		},
-		"day": (initial: number) => {
+		day: (initial: number) => {
 			const standard = initial * 86_400;
 			cli.print("[Formula] Second = Day * 86400", "hidden");
 			cli.print(`[Evaluate] Second = ${standard}`, "hidden");
 			return standard;
 		},
-		"week": (initial: number) => {
+		week: (initial: number) => {
 			const standard = initial * 604_800;
 			cli.print("[Formula] Second = Week * 604800", "hidden");
 			cli.print(`[Evaluate] Second = ${standard}`, "hidden");
 			return standard;
 		},
-		"month": (initial: number) => {
+		month: (initial: number) => {
 			const standard = initial * 2_419_200;
 			cli.print("[Assume] Month = Day * 28", "hidden");
 			cli.print("[Formula] Second = Week * 2419200", "hidden");
 			cli.print(`[Evaluate] Second = ${standard}`, "hidden");
 			return standard;
 		},
-		"year": (initial: number) => {
+		year: (initial: number) => {
 			const standard = initial * 31_536_000;
 			cli.print("[Assume] Year = Day * 365", "hidden");
 			cli.print("[Formula] Second = Year * 31536000", "hidden");
@@ -102,48 +102,48 @@ export const converter = {
 		}
 	},
 	to: {
-		"millisecond": (standard: number) => {
+		millisecond: (standard: number) => {
 			const final = standard * 1000;
 			cli.print("[Formula] Millisecond = Second * 1000", "hidden");
 			cli.print(`[Evaluate] Millisecond = ${final}`, "hidden");
 			return final;
 		},
-		"second": (standard: number) => {
+		second: (standard: number) => {
 			const final = standard;
 			return final;
 		},
-		"minute": (standard: number) => {
+		minute: (standard: number) => {
 			const final = standard / 60;
 			cli.print("[Formula] Minute = Second / 60", "hidden");
 			cli.print(`[Evaluate] Minute = ${final}`, "hidden");
 			return final;
 		},
-		"hour": (standard: number) => {
+		hour: (standard: number) => {
 			const final = standard / 3_600;
 			cli.print("[Formula] Hour = Second / 3600", "hidden");
 			cli.print(`[Evaluate] Hour = ${final}`, "hidden");
 			return final;
 		},
-		"day": (standard: number) => {
+		day: (standard: number) => {
 			const final = standard / 86_400;
 			cli.print("[Formula] Day = Second / 86400", "hidden");
 			cli.print(`[Evaluate] Day = ${final}`, "hidden");
 			return final;
 		},
-		"week": (standard: number) => {
+		week: (standard: number) => {
 			const final = standard / 86_400;
 			cli.print("[Formula] Day = Second / 86400", "hidden");
 			cli.print(`[Evaluate] Day = ${final}`, "hidden");
 			return final;
 		},
-		"month": (standard: number) => {
+		month: (standard: number) => {
 			const final = standard / 2_419_200;
 			cli.print("[Assume] Month = Day * 28", "hidden");
 			cli.print("[Formula] Month = Second / 2419200", "hidden");
 			cli.print(`[Evaluate] Month = ${final}`, "hidden");
 			return final;
 		},
-		"year": (standard: number) => {
+		year: (standard: number) => {
 			const final = standard / 31_536_000;
 			cli.print("[Assume] Year = Day * 365", "hidden");
 			cli.print("[Formula] Year = Second / 31536000", "hidden");
@@ -154,11 +154,7 @@ export const converter = {
 };
 
 // Creates helper
-export async function execute(values: {
-	from: RawUnit;
-	to: RawUnit;
-	initial: number;
-}): Promise<number> {
+export async function execute(values: { from: RawUnit; to: RawUnit; initial: number }): Promise<number> {
 	// Converts conversion from unit to international standard unit
 	const from = units[values.from];
 	cli.print(`[Given] Conversion From Unit = ${from}`);
