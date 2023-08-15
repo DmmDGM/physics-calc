@@ -1,1 +1,1 @@
-node . @args
+node --no-warnings . @args

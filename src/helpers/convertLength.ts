@@ -2,7 +2,7 @@
 import formatNumber from "./formatNumber.js";
 import * as cli from "../cli.js";
 
-// Types
+// Defines types
 export type RawUnit = keyof typeof units;
 export type ParsedUnit = typeof units[RawUnit];
 
@@ -195,7 +195,7 @@ export const converter = {
 		},
 		"mile": (standard: number) => {
 			const final = standard / 1_609;
-			cli.print("[Formula] Mile = Meter / 1,609", "hidden");
+			cli.print("[Formula] Mile = Meter / 1609", "hidden");
 			cli.print(`[Evaluate] Mile = ${final}`, "hidden");
 			return final;
 		}
@@ -203,7 +203,7 @@ export const converter = {
 };
 
 // Creates helper
-export async function helper(values: {
+export async function execute(values: {
 	from: RawUnit;
 	to: RawUnit;
 	initial: number;
@@ -219,11 +219,11 @@ export async function helper(values: {
 	const to = units[values.to];
 	cli.print(`[Given] Conversion To Unit = ${to}`);
 	const final = converter.to[to](standard);
-	cli.print(`[Answer] Initial Value = ${await formatNumber({ value: final })}`);
+	cli.print(`[Answer] Final Value = ${await formatNumber({ value: final })}`);
 
 	// Returns converted unit
 	return final;
 }
 
 // Exports
-export default helper;
+export default execute;

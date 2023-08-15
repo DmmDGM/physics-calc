@@ -1,5 +1,5 @@
 // Creates helper
-export async function helper(values: {
+export async function execute(values: {
 	value: string | number;
 }): Promise<string> {
 	// Parses number
@@ -14,4 +14,4 @@ export async function helper(values: {
 }
 
 // Exports
-export default helper;
+export default execute;

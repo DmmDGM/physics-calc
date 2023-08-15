@@ -17,9 +17,9 @@ export type Keyboard = nodeEvents.EventEmitter & {
 	emit: (event: "key", data: KeyboardData) => void;
 	on: (event: "key", callback: (data: KeyboardData) => void) => void;
 };
-export type PrintStyle = "default" | "hidden" | "warning" | "error" | "important";
+export type PrintStyle = "default" | "error" | "hidden" | "highlight" | "important" | "separator" | "text" | "warning";
 
-// Creates interface
+// Creates stdio
 export const stdio = nodeReadline.createInterface({
 	input: process.stdin,
 	output: process.stdout
@@ -28,9 +28,11 @@ export const stdio = nodeReadline.createInterface({
 // Creates keyboard
 export const keyboard: Keyboard = new nodeEvents.EventEmitter();
 
-// Handles keypress event
+// Emits keypress events
 nodeReadline.emitKeypressEvents(process.stdin);
 if(process.stdin.isTTY) process.stdin.setRawMode(true);
+
+// Creates listener
 process.stdin.on("keypress", (raw: string, key: {
 	code?: string,
 	ctrl: boolean,
@@ -51,25 +53,51 @@ process.stdin.on("keypress", (raw: string, key: {
 	});
 });
 
+// Creates clear function
+export function clear(): void {
+	// Clears cli
+	console.clear();
+}
+
+// Creates gap function
+export function gap(gap: number = 1): void {
+	// Prints gap
+	console.log("\n".repeat(gap - 1));
+}
+
 // Creates print function
 export function print(message: string, style: PrintStyle = "default"): void {
 	// Creates styles
 	const styles = {
-		default: chalk.green,
-		error: chalk.red,
-		hidden: chalk.gray,
-		important: chalk.blue,
-		warning: chalk.yellow
+		"default": chalk.green,
+		"error": chalk.red,
+		"hidden": chalk.gray,
+		"highlight": chalk.bgYellowBright.black,
+		"important": chalk.blue,
+		"separator": chalk.magenta,
+		"text": chalk.white,
+		"warning": chalk.yellow
 	};
 
 	// Prints message
-	process.stdout.write(styles[style](message) + "\n");
+	console.log(styles[style](message));
+}
+
+// Creates cursor functions
+export function hideCursor(): void {
+	// Prints cursor hide unicode
+	process.stdout.write("\x1b[?25l");
+}
+export function showCursor(): void {
+	// Prints cursor hide unicode
+	process.stdout.write("\x1b[?25h");
 }
 
 // Creates prompt functions
 export function prompt(query: string = "> "): Promise<string> {
 	// Returns response
 	return new Promise(resolve => {
+		// Prompts
 		stdio.question(chalk.blue(query), response => {
 			resolve(response);
 		});

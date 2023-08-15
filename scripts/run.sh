@@ -1,1 +1,1 @@
-node . $@
+node --no-warnings . $@
