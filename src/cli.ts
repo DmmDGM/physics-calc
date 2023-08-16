@@ -16,6 +16,7 @@ export type KeyboardData = {
 export type Keyboard = nodeEvents.EventEmitter & {
 	emit: (event: "key", data: KeyboardData) => void;
 	on: (event: "key", callback: (data: KeyboardData) => void) => void;
+	once: (event: "key", callback: (data: KeyboardData) => void) => void;
 };
 export type PrintStyle = "default" | "error" | "hidden" | "highlight" | "important" | "separator" | "text" | "warning";
 

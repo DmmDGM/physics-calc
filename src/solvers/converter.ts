@@ -65,9 +65,6 @@ export async function execute(
 	else throw new Error("[Error] Invalid conversion units");
 	cli.print("--- [Converter (End)] ---", "separator");
 
-	// Prints converted unit
-	cli.print(`[Answer] Final Value = ${await formatNumber({ value: final })}`);
-
 	// Returns converted unit
 	return final;
 }

@@ -53,6 +53,7 @@ export async function execute(
 	const definitions: Definition[] = await result.json();
 
 	// Prints definitions
+	cli.print("--- [Dictionary (Start)] ---", "separator");
 	for (let definitionIndex = 0; definitionIndex < definitions.length; definitionIndex++) {
 		// Defines definition
 		const definition = definitions[definitionIndex];
@@ -69,7 +70,7 @@ export async function execute(
 			.join(", ");
 
 		// Prints header
-		cli.gap();
+		if(definitionIndex) cli.gap();
 		cli.print(`Word: ${word}`, "important");
 		cli.print(`Phonetics: (${phonetics})`, "hidden");
 
@@ -106,6 +107,7 @@ export async function execute(
 			cli.print(`Antonyms: ${antonyms}`);
 		}
 	}
+	cli.print("--- [Dictionary (End)] ---", "separator");
 }
 
 // Exports
